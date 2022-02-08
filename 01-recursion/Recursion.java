@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Recursion{
   public static String reverse(String s){
     if(s.length() == 1){return s;}
@@ -23,10 +25,22 @@ public class Recursion{
     return isEven(n - 2);
   }
 
+  public static boolean partialSum(int[] array, int index, int target){
+    if(index == array.length - 1){
+      target -= array[array.length - 1];
+      return (target == 0);
+    }
+    System.out.println(Arrays.toString(Arrays.copyOfRange(array, index, array.length - 1)) + ", Target = " + target );
+    return ( partialSum(array, index + 1, target - array[index] ) || partialSum(array, index + 1, target) );
+
+  }
+
   public static void main(String[] args){
+    int[] list = {8, 2, 3, 1, 7};
     System.out.println( reverse("Foo") );
     System.out.println( sqrt(100) );
     System.out.println( fact(5) );
     System.out.println( isEven(5) + ", " + isEven(6) );
+    System.out.println( partialSum(list, 0, 6) );
   }
 }
