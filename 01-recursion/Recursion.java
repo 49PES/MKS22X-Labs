@@ -14,7 +14,7 @@ public class Recursion{
     if( (guess * guess / n) - 1 < 0.00001) return guess;
     return sqrt(n, (n / guess + guess) / 2);
   }
-
+/*
   public static int fact(int n){
     if(n == 0){return 1;}
     return (n * fact(n - 1));
@@ -35,12 +35,31 @@ public class Recursion{
 
   }
 
+  public static void makeWords(int remainingLetters, String result){
+    if(remainingLetters == 0){System.out.println(result); return;}
+    for(char letter = 'a' ; letter <= 'c'; letter++){
+        makeWords(remainingLetters - 1, result + letter);
+    }
+  }
+*/
+
+public static int fibIter(int n, int f1, int f2){
+  if (n == 1)
+     return f1;
+  if (n == 0)
+      return f2;
+  return fibIter(n - 1, f1 + f2, f1);
+}
   public static void main(String[] args){
-    int[] list = {8, 2, 3, 1, 7};
+  //  int[] list = {8, 2, 3, 1, 7};
     System.out.println( reverse("Foo") );
     System.out.println( sqrt(100) );
-    System.out.println( fact(5) );
-    System.out.println( isEven(5) + ", " + isEven(6) );
-    System.out.println( partialSum(list, 0, 6) );
+  //  System.out.println( fact(5) );
+  //  System.out.println( isEven(5) + ", " + isEven(6) );
+//    System.out.println( partialSum(list, 0, 6) );
+//    makeWords(3, "");
+for(int i = 0; i < 10; i++){
+  System.out.println(fibIter(i, 1, 0));
+}
   }
 }
