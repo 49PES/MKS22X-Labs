@@ -12,8 +12,21 @@ public class Recursion{
     if( (guess * guess / n) - 1 < 0.00001) return guess;
     return sqrt(n, (n / guess + guess) / 2);
   }
+
+  public static int fact(int n){
+    if(n == 0){return 1;}
+    return (n * fact(n - 1));
+  }
+
+  public static boolean isEven(int n){
+    if(n < 2){return (n == 0); }
+    return isEven(n - 2);
+  }
+
   public static void main(String[] args){
     System.out.println( reverse("Foo") );
     System.out.println( sqrt(100) );
+    System.out.println( fact(5) );
+    System.out.println( isEven(5) + ", " + isEven(6) );
   }
 }
