@@ -40,6 +40,12 @@ public class RecursionClasswork{
   return (groupSumClump(start + 1, nums, target - nums[start] ) || groupSumClump(start + 1, nums, target  ));
 }
 
+public boolean groupNoAdj(int start, int[] nums, int target) {
+	  if (start >= nums.length){
+	    return (target == 0);
+		}
+	  return (groupNoAdj(start + 1, nums, target)) || (groupNoAdj(start + 2, nums, target - nums[start]));
+	}
 
 	 public boolean splitArray(int[] nums){
 	 	return splitArrayHelper(nums, 0, 0, 0);
