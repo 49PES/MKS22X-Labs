@@ -11,18 +11,21 @@ public class RecursionClasswork{
 	}
 
 	public boolean groupSum5(int start, int[] nums, int target){
-		if(start >= nums.length){return (target == 0);}
-		if(nums[start] == 5 && start + 1 < nums.length && nums[start + 1] == 1){
+		if(start >= nums.length){ return (target == 0);}
+		if(nums[start] % 5 == 0 && start + 1 < nums.length && nums[start + 1] == 1){
 			return (groupSum5(start + 2, nums, target - nums[start]) || groupSum5(start + 2, nums, target));
 			// If a number is a 5, and the number immediately succeeding it is a 1, skip over the 1's index by incrementing start by 2
 		}
 		return ( groupSum5(start + 1, nums, target) || groupSum5(start + 1, nums, target - nums[start]) );
 	}
 
-	// public boolean groupNoAdj(int start, int[] nums, int target){
-	// 	if(start >= nums.length) {return (target == 0);}
-	//
-	// }
+	public boolean groupNoAdj(int start, int[] nums, int target){
+		if(start >= nums.length) return (target == 0);
+		if(start == 0){
+			return (groupNoAdj(start + 1, nums, target) || groupNoAdj(start + 2, nums, target - nums[start]));
+		}
+		return(groupNoAdj(start + 2, nums, target - nums[start]) || groupNoAdj(start + 2, nums, target) );
+	}
 
 	public boolean groupSumClump(int start, int[] nums, int target) {
   if(start >= nums.length) {return (target == 0);}
@@ -79,6 +82,6 @@ public class RecursionClasswork{
 }
 
 	public static void main(String[] args){
-
+		System.out.println(groupSum5(0, [2, 5, 10, 4], 12));
 	}
 }
