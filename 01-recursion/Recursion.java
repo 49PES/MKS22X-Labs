@@ -14,34 +14,6 @@ public class Recursion{
     if( (guess * guess / n) - 1 < 0.00001) return guess;
     return sqrt(n, (n / guess + guess) / 2);
   }
-/*
-  public static int fact(int n){
-    if(n == 0){return 1;}
-    return (n * fact(n - 1));
-  }
-
-  public static boolean isEven(int n){
-    if(n < 2){return (n == 0); }
-    return isEven(n - 2);
-  }
-
-  public static boolean partialSum(int[] array, int index, int target){
-    if(index == array.length - 1){
-      target -= array[array.length - 1];
-      return (target == 0);
-    }
-    System.out.println(Arrays.toString(Arrays.copyOfRange(array, index, array.length - 1)) + ", Target = " + target );
-    return ( partialSum(array, index + 1, target - array[index] ) || partialSum(array, index + 1, target) );
-
-  }
-
-  public static void makeWords(int remainingLetters, String result){
-    if(remainingLetters == 0){System.out.println(result); return;}
-    for(char letter = 'a' ; letter <= 'c'; letter++){
-        makeWords(remainingLetters - 1, result + letter);
-    }
-  }
-*/
 
 public static int fibIter(int n, int f1, int f2){
   if (n == 1)
@@ -52,10 +24,9 @@ public static int fibIter(int n, int f1, int f2){
 }
 
 public static long countNoDoubleLetterWords(int length, String word){
-  if(length == 0){
-    // System.out.println(word);
+  if(length == 0)
     return 1L;
-  }
+
   long sum = 0;
   for(char letter = 'a' ; letter <= 'z'; letter++){
     if(word.length() == 0 || word.charAt(word.length() - 1) != letter) {
@@ -64,29 +35,17 @@ public static long countNoDoubleLetterWords(int length, String word){
   }
   return sum;
 }
+
   public static void main(String[] args){
-  //  int[] list = {8, 2, 3, 1, 7};
-  //   System.out.println( reverse("Foo") );
-  //   System.out.println( sqrt(100) );
-  // //  System.out.println( fact(5) );
-  // //  System.out.println( isEven(5) + ", " + isEven(6) );
-  // //    System.out.println( partialSum(list, 0, 6) );
-  // //    makeWords(3, "");
-  // for(int i = 0; i < 10; i++){
-  //   System.out.println(fibIter(i, 1, 0));
-  // }
-  System.out.println(countNoDoubleLetterWords(1, "")); // Should print out 26
 
-  System.out.println(countNoDoubleLetterWords(2, "")); // Should print out 26^2 - 26 = 650
-  // Above actually just prints 676 (26^2) ?
+  System.out.println( "\"Mr. K is Kool\" reversed is \"" + reverse("Mr. K is Kool") + "\"");
+  System.out.println( "Square root of 100 is approx: " + sqrt(100) );
+  for(int i = 0; i < 10; i++){
+     System.out.println("Fibonacci Num " + i + ":" + fibIter(i, 1, 0));
+  }
+  for(int i = 0; i < 4; i++){
+    System.out.println("Number of " + i + "-letter words w/out repeating adjacent letters: " + countNoDoubleLetterWords(i, ""));
+  }
 
-  System.out.println(countNoDoubleLetterWords(3, "")); // Should print out 26^3 - (2 * 26 * 25) - (26) = 16224 ?
-  // // Above actually prints out 16926  (26^3 - 26^2 + 26) ?
-  //
-  System.out.println(countNoDoubleLetterWords(4, "")); // Should print out 26^3 - (2 * 26 * 25) - (26) = 16224 ?
-  // // Above actually prints out 16926  (26^3 - 26^2 + 26) ?
-  //
-  // System.out.println(countNoDoubleLetterWords(5, "")); // Should print out 26^3 - (2 * 26 * 25) - (26) = 16224 ?
-  // // Above actually prints out 16926  (26^3 - 26^2 + 26) ?
   }
 }
