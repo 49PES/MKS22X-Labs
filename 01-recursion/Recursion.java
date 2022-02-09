@@ -23,18 +23,46 @@ public static int fibIter(int n, int f1, int f2){
   return fibIter(n - 1, f1 + f2, f1);
 }
 
+public static void printAllWords(int length){
+  printAllWords(length, "");
+}
+
+public static void printAllWords(int length, String word){
+    if(word.length() == length){System.out.println(word); return; }
+    for(char letter = 'a' ; letter <= 'e'; letter++){
+      printAllWords(length, word + letter);
+    }
+}
+
 public static long countNoDoubleLetterWords(int length, String word){
   if(length == 0)
     return 1L;
 
   long sum = 0;
-  for(char letter = 'a' ; letter <= 'z'; letter++){
+  for(char letter = 'a' ; letter <= 'e'; letter++){
     if(word.length() == 0 || word.charAt(word.length() - 1) != letter) {
       sum += countNoDoubleLetterWords(length - 1, word + letter);
     }
   }
   return sum;
 }
+
+
+public static void printNoDoubleLetterWords(int length,char[] letters){
+              printNoDoubleLetterWords(length,"",letters);
+            }
+public static void printNoDoubleLetterWords(int length,String word,char[]letters){
+  if(length == 0){
+    System.out.println(word);
+    return;
+  }
+
+  for(char letter : letters){
+    if(word.length() == 0 || word.charAt(word.length() - 1) != letter) {
+      printNoDoubleLetterWords(length - 1, word + letter, letters);
+    }
+  }
+  }
 
   public static void main(String[] args){
 
@@ -46,6 +74,9 @@ public static long countNoDoubleLetterWords(int length, String word){
   for(int i = 0; i < 4; i++){
     System.out.println("Number of " + i + "-letter words w/out repeating adjacent letters: " + countNoDoubleLetterWords(i, ""));
   }
-
+  // printAllWords(3);
+  char[] aThruE = {'a', 'b', 'c', 'd', 'e'};
+  printNoDoubleLetterWords(2, aThruE);
   }
+
 }
