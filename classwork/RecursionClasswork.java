@@ -24,6 +24,20 @@ public class RecursionClasswork{
 	//
 	// }
 
+	public boolean groupSumClump(int start, int[] nums, int target) {
+  if(start >= nums.length) {return (target == 0);}
+
+  if(start + 1 < nums.length && nums[start] == nums[start + 1]){
+    int newIndex = start;
+    while(newIndex + 1 < nums.length && nums[start] == nums[newIndex]) newIndex++;
+    return (groupSumClump(newIndex + 1, nums, target - ((newIndex - start) * nums[start])) || groupSumClump(newIndex + 1, nums, target)  );
+
+  }
+
+  return (groupSumClump(start + 1, nums, target - nums[start] ) || groupSumClump(start + 1, nums, target  ));
+}
+
+
 	 public boolean splitArray(int[] nums){
 	 	return splitArrayHelper(nums, 0, 0, 0);
 	}
@@ -58,10 +72,10 @@ public class RecursionClasswork{
   return splitOdd10Helper(nums, 0, 0, 0);
 	}
 
-public boolean splitOdd10Helper(int[] nums, int index, int oddSum, int tenSum){
+	public boolean splitOdd10Helper(int[] nums, int index, int oddSum, int tenSum){
   if(index >= nums.length){return (oddSum % 2 == 1 && tenSum % 10 == 0);}
   return(splitOdd10Helper(nums, index + 1, oddSum + nums[index], tenSum) || splitOdd10Helper(nums, index + 1, oddSum, tenSum + nums[index])  );
-  
+
 }
 
 	public static void main(String[] args){
