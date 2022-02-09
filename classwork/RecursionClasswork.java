@@ -18,6 +18,21 @@ public class RecursionClasswork{
 		}
 		return ( groupSum5(start + 1, nums, target) || groupSum5(start + 1, nums, target - nums[start]) );
 	}
+
+	// public boolean groupNoAdj(int start, int[] nums, int target){
+	// 	if(start >= nums.length) {return (target == 0);}
+	//
+	// }
+
+	 public boolean splitArray(int[] nums){
+	 	return splitArrayHelper(nums, 0, 0, 0);
+	}
+
+	public boolean splitArrayHelper(int[] nums, int index, int sumOne, int sumTwo){
+		if(index >= nums.length){return (sumOne == sumTwo);}
+		return (splitArrayHelper(nums, index + 1, sumOne + nums[index], sumTwo ) || splitArrayHelper(nums, index + 1, sumOne, sumTwo  + nums[index]));
+		// Either an element is a member of sumOne, or it is a member of sumTwo, so increment sumOne and sumTwo accordingly 
+	}
 	public static void main(String[] args){
 
 	}
