@@ -31,7 +31,27 @@ public class RecursionClasswork{
 	public boolean splitArrayHelper(int[] nums, int index, int sumOne, int sumTwo){
 		if(index >= nums.length){return (sumOne == sumTwo);}
 		return (splitArrayHelper(nums, index + 1, sumOne + nums[index], sumTwo ) || splitArrayHelper(nums, index + 1, sumOne, sumTwo  + nums[index]));
-		// Either an element is a member of sumOne, or it is a member of sumTwo, so increment sumOne and sumTwo accordingly 
+		// Either an element is a member of sumOne, or it is a member of sumTwo, so increment sumOne and sumTwo accordingly
+	}
+
+	public boolean split53(int[] nums){
+
+	}
+
+	public boolean split53Helper(int[] nums, int index, int sumOne, int sumTwo){
+		if(index >= nums.length) {return (sumOne == sumTwo);}
+
+		if(nums[index] % 5 == 0) {
+			return split53Helper(nums, index + 1, sumOne, sumTwo + nums[index]);
+		}
+
+		if(nums[index] % 3 == 0) {
+			return split53Helper(nums, index + 1, sumOne + nums[index], sumTwo);
+			// If nums[index] wasn't already divisible by 5, only then would it go on to this - so adding a  || (nums[index] % 5 == 0) would be redundant
+		}
+
+		return (split53Helper(nums, index + 1, sumOne + nums[index], sumTwo) || split53Helper(nums, index + 1, sumOne, sumTwo + nums[index])); 
+
 	}
 	public static void main(String[] args){
 
