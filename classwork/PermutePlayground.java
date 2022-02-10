@@ -2,7 +2,7 @@ public class PermutePlayground{
   public static void permute(String[][] lists, String sentence, int current){
     if(current == lists.length - 1){
       for(String str : lists[current]){
-        System.out.println(sentence + " " + str);
+        System.out.println( new String(sentence + " " + str).substring(1) );
       }
     }
 
