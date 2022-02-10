@@ -35,7 +35,7 @@ public class RecursionClasswork{
 	}
 
 	public boolean split53(int[] nums){
-
+		return(nums, 0, 0, 0);
 	}
 
 	public boolean split53Helper(int[] nums, int index, int sumOne, int sumTwo){
@@ -50,7 +50,7 @@ public class RecursionClasswork{
 			// If nums[index] wasn't already divisible by 5, only then would it go on to this - so adding a  || (nums[index] % 5 == 0) would be redundant
 		}
 
-		return (split53Helper(nums, index + 1, sumOne + nums[index], sumTwo) || split53Helper(nums, index + 1, sumOne, sumTwo + nums[index])); 
+		return (split53Helper(nums, index + 1, sumOne + nums[index], sumTwo) || split53Helper(nums, index + 1, sumOne, sumTwo + nums[index]));
 
 	}
 	public static void main(String[] args){
