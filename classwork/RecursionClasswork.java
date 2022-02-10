@@ -44,11 +44,7 @@ public class RecursionClasswork{
 	}
 
 	public boolean split53(int[] nums){
-<<<<<<< HEAD
-		return(nums, 0, 0, 0);
-=======
-		return split53Helper(nums, 0, 0, 0);
->>>>>>> 3dcf30e8bf64e4de007479fd29a038c59bdff7ee
+		return  split53Helper(nums, 0, 0, 0);
 	}
 
 	public boolean split53Helper(int[] nums, int index, int sumOne, int sumTwo){
