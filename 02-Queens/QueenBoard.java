@@ -32,7 +32,7 @@ public class QueenBoard{
 	}
 
 	private void removeQueen(int r, int c){
-			modifyBoard(r, c, 1); // Removing a queen = -1 increment
+			modifyBoard(r, c, -1); // Removing a queen = -1 increment
 	}
 
 	private void modifyBoard(int r, int c, int increment){
@@ -40,19 +40,18 @@ public class QueenBoard{
 
 		board[r][c] += -increment; // Add the queen with a -1 value // Remove the Queen by adding 1
 		for(int i = r + 1; i < board.length; i++){
+			/** DOWN **/
 			board[i][c] += increment; // Increment the values below the added queen by +1
-		}
 
-		for(int j = r + 1; j < board.length; j++){
-			for(int k = c - 1; k >= 0; k--){
-				board[j][k] += increment; // Increment the diagonal going to the bottom-left of the added Queen by +1 // Subtract 1 if Queen is removed
+			/** BOTTOM LEFT **/
+			for(int j = c - 1; j >= 0; j--){
+				board[i][j] += increment; // Increment the diagonal going to the bottom-left of the added Queen by +1 // Subtract 1 if Queen is removed
 				// Assumption is that this is a n x n square - modify second for-loop to k < board[0].length otherwise
 			}
-		}
 
-		for(int j = r + 1; j < board.length; j++){
+			/** BOTTOM rIGHT **/
 			for(int k = c + 1; k < board.length; k++){
-				board[j][k] += increment; // Increment the diagonal going to the bottom-right of the added Queen by +1 // Subtract 1 if Queen is removed
+				board[i][k] += increment; // Increment the diagonal going to the bottom-right of the added Queen by +1 // Subtract 1 if Queen is removed
 				// Assumption is that this is a n x n square - modify second for-loop to k < board[0].length otherwise
 			}
 		}
