@@ -1,3 +1,4 @@
+
 public class QueenBoard{
 	private int[][] board;
 
@@ -39,6 +40,7 @@ public class QueenBoard{
 		}
 		return output;
 	}
+
 	private boolean addQueen(int r, int c){
 		// If the position is threatened (denoted when the value is positive), then you can not add a queen at the position
 		if(board[r][c] > 0){return false;}
@@ -76,29 +78,55 @@ public class QueenBoard{
 
 	}
 
+	boolean solve(int row){
+		if(row == board.length) {return true;}
+		else{
+			// Row remaining constant, iterate through the columns
+			for(int col = 0; col < board[0].length; col++){
+				if(addQueen(row, col) ){
+					// Try adding a queen at the given index
+					// If it fully resolves, then the method can return true
+					if(solve(row + 1)){
+						return true;
+					}
+
+					// Else, remove the queen and proceed to increment column
+					removeQueen(row, col);
+				}
+			}
+			return false;
+		}
+	}
+
 	public static void main(String[] args){
 		QueenBoard foo = new QueenBoard(8);
 
-		System.out.println("Default board:");
-		System.out.println(foo.toString() ); // Verifies whether the construction worked
+		// PRELIMINARY CHECK UP
+		// System.out.println("Default board:");
+		// System.out.println(foo.toString() ); // Verifies whether the construction worked
+		//
+		// System.out.println("Adding Queen at (4, 4)");
+		// foo.addQueen(4, 4);
+		// System.out.println(foo.toString() );
+		// System.out.println(foo.toStringNumber() ); // Verify that adding a queen works
+		//
+		// System.out.println("Trying to add Queen at (5, 5)");
+		// foo.addQueen(5, 5);
+		// System.out.println(foo.toString() ); // Verify that adding does *not* work when the position is threatened
+		//
+		// System.out.println("Add Queen at (1, 2)");
+		// foo.addQueen(1, 2);
+		// System.out.println(foo.toString() );
+		// System.out.println(foo.toStringNumber() ); // Verify that the values aggregate properly
+		//
+		// System.out.println("Remove Queen at (4, 4)");
+		// foo.removeQueen(4, 4);
+		// System.out.println(foo.toString() );
+		// System.out.println(foo.toStringNumber() ); // Verify that removing works
+		//
+		// foo.removeQueen(1, 2);
 
-		System.out.println("Adding Queen at (4, 4)");
-		foo.addQueen(4, 4);
+		foo.solve(0);
 		System.out.println(foo.toString() );
-		System.out.println(foo.toStringNumber() ); // Verify that adding a queen works
-
-		System.out.println("Trying to add Queen at (5, 5)");
-		foo.addQueen(5, 5);
-		System.out.println(foo.toString() ); // Verify that adding does *not* work when the position is threatened
-
-		System.out.println("Add Queen at (1, 2)");
-		foo.addQueen(1, 2);
-		System.out.println(foo.toString() );
-		System.out.println(foo.toStringNumber() ); // Verify that the values aggregate properly
-
-		System.out.println("Remove Queen at (4, 4)");
-		foo.removeQueen(4, 4);
-		System.out.println(foo.toString() );
-		System.out.println(foo.toStringNumber() ); // Verify that removing works
 	}
 }
