@@ -2,6 +2,24 @@
 public class QueenBoard{
 	private int[][] board;
 
+  private boolean animated;
+  private int delay;
+
+  public void setAnimate(boolean newValue){
+    animated = newValue;
+  }
+
+  public void setDelay(int newValue){
+
+    if(newValue < 0){
+      delay = 0;
+    }
+    else{
+      delay = newValue;
+    }
+
+  }
+
 	public QueenBoard(int size){
 		board = new int[size][size];
 	}
@@ -9,15 +27,11 @@ public class QueenBoard{
 	public String toString(){
 		String output = "";
 		for(int[] row : board){
-			for(int i = 0; i < row.length; i++){
-				if(i == 0){
-					if(row[i] == -1) { output += "Q";}
-					else {output += "_";}
-				}
-				else{
-					if(row[i] == -1) { output += " Q";}
-					else {output += " _";}
-				}
+			for(int element : row){
+					if(element == -1)
+            output += "Q ";
+		      else
+            output += "_ ";
 			}
 			output += "\n";
 		}
@@ -46,11 +60,26 @@ public class QueenBoard{
 		if(board[r][c] > 0){return false;}
 
 		modifyBoard(r, c, 1); // Adding a queen = +1 increment
+
+    if(animated){
+      System.out.println(Text.go(1,1));
+      System.out.println(this);//can modify here
+      Text.wait(delay);
+    }
+
 		return true;
 	}
 
 	private void removeQueen(int r, int c){
-			modifyBoard(r, c, -1); // Removing a queen = -1 increment
+    if(board[r][c] == 1){return;}
+
+    if(animated){
+      System.out.println(Text.go(1,1));
+      System.out.println(this);//can modify here
+      Text.wait(delay);
+    }
+
+    modifyBoard(r, c, -1); // Removing a queen = -1 increment
 	}
 
 	private void modifyBoard(int r, int c, int increment){
@@ -65,7 +94,7 @@ public class QueenBoard{
 
 			// DOWN & LEFT
 			if(c - k >= 0){
-				board[i][c - k] += increment; // Increment the diagonal going DOWN and LEFT
+				board[i][c - k] += increment;
 			}
 
 			// DOWN & RIGHT
@@ -78,7 +107,7 @@ public class QueenBoard{
 
 	}
 
-	boolean solve(int row){
+	public boolean solve(int row){
 		if(row == board.length) {return true;}
 		else{
 			// Row remaining constant, iterate through the columns
@@ -99,34 +128,25 @@ public class QueenBoard{
 	}
 
 	public static void main(String[] args){
-		QueenBoard foo = new QueenBoard(8);
+    int SIZE = 8;
+    if(args.length > 0){
+      SIZE = Integer.parseInt(args[0]);
+    }
+    QueenBoard b = new QueenBoard(SIZE);
+    if(args.length > 1){
+      b.setAnimate(true);
+      b.setDelay(Integer.parseInt(args[1]));
+    }
+    System.out.println(Text.CLEAR_SCREEN);
+    System.out.println(Text.HIDE_CURSOR);
+    System.out.println(Text.go(1,1));
+    b.solve(0);
+    System.out.println(Text.RESET);
+    System.out.println(Text.go(1,1));
+    System.out.println(b);
+    System.out.println(b.toString() );
+    System.out.println(Text.RESET);
 
-		// PRELIMINARY CHECK UP
-		// System.out.println("Default board:");
-		// System.out.println(foo.toString() ); // Verifies whether the construction worked
-		//
-		// System.out.println("Adding Queen at (4, 4)");
-		// foo.addQueen(4, 4);
-		// System.out.println(foo.toString() );
-		// System.out.println(foo.toStringNumber() ); // Verify that adding a queen works
-		//
-		// System.out.println("Trying to add Queen at (5, 5)");
-		// foo.addQueen(5, 5);
-		// System.out.println(foo.toString() ); // Verify that adding does *not* work when the position is threatened
-		//
-		// System.out.println("Add Queen at (1, 2)");
-		// foo.addQueen(1, 2);
-		// System.out.println(foo.toString() );
-		// System.out.println(foo.toStringNumber() ); // Verify that the values aggregate properly
-		//
-		// System.out.println("Remove Queen at (4, 4)");
-		// foo.removeQueen(4, 4);
-		// System.out.println(foo.toString() );
-		// System.out.println(foo.toStringNumber() ); // Verify that removing works
-		//
-		// foo.removeQueen(1, 2);
 
-		foo.solve(0);
-		System.out.println(foo.toString() );
 	}
 }
