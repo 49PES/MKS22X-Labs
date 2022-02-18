@@ -127,6 +127,65 @@ public class QueenBoard{
 		}
 	}
 
+	public void solve() throws RuntimeException{
+		for(int[] row : board){
+			for(int element : row){
+				if (element != 0){
+					System.out.println(this.toString() );
+					System.out.println(this.toStringNumber() );
+					throw new RuntimeException("Invalid initial board - has at least one non-zero element");
+				}
+			}
+		}
+		this.solve(0);
+
+	}
+
+	public int countSolutions(){
+
+		if(countQueens() == board.length){return 1;}
+		int numSolutions = 0;
+		for(int row = 0; row < board.length; row++){
+			for(int column = 0; column < board.length; column++){
+				if(addQueen(row, column)){
+					if(solve(row + 1)){
+						numSolutions++;
+					}
+					else{
+						removeQueen(row, column);
+					}
+				}
+			}
+		}
+		return numSolutions;
+}
+
+//
+// 	public static long countNoDoubleLetterWords(int length, String word){
+//   	if(length == 0)
+//     return 1L;
+//
+//   long sum = 0;
+//   for(char letter = 'a' ; letter <= 'e'; letter++){
+//     if(word.length() == 0 || word.charAt(word.length() - 1) != letter) {
+//       sum += countNoDoubleLetterWords(length - 1, word + letter);
+//     }
+//   }
+//   return sum;
+// }
+//
+//
+
+	public int countQueens(){
+		int numQueens = 0;
+		for(int[] row : board){
+			for(int element : row){
+				if (element == 1){numQueens++;}
+			}
+		}
+		return numQueens;
+	}
+
 	public static void main(String[] args){
     int SIZE = 8;
     if(args.length > 0){
@@ -140,11 +199,12 @@ public class QueenBoard{
     System.out.println(Text.CLEAR_SCREEN);
     System.out.println(Text.HIDE_CURSOR);
     System.out.println(Text.go(1,1));
-    b.solve(0);
+    b.solve();
     System.out.println(Text.RESET);
     System.out.println(Text.go(1,1));
     System.out.println(b);
     System.out.println(b.toString() );
+		System.out.println(b.toStringNumber());
     System.out.println(Text.RESET);
 
 
