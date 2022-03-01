@@ -17,22 +17,11 @@ public class ReadFile {
       char[][] maze = new char[0][0];
       while (sc.hasNextLine()){
         String str = sc.nextLine();
-        fullStr += str + "\n";
-        numColumns = str.length();
-        numRows++;
-      }
-      for(int i = 0; i < numRows; i++){
-        char[] ch = (fullStr.substring(i, i + (numColumns - 1))).toCharArray();
-        // System.out.println(Arrays.toString(ch) );
+        char[] ch = str.toCharArray();
         maze = append(maze, ch);
+
       }
 
-      for(char[] row : maze){
-        System.out.println(new String(row) );
-      }
-      // char[] ch = str.toCharArray();
-      // System.out.println(Arrays.toString(ch));
-      // System.out.println(fullStr);
     }
     catch (Exception e) {
       throw new FileNotFoundException("File not found");

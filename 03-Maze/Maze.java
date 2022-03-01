@@ -23,33 +23,16 @@ public class Maze{
 
 
   public Maze(String filename) throws FileNotFoundException{
-    try {
-      File file = new File(filename);
-      Scanner sc = new Scanner(file);
-      String fullStr = "";
-      int numRows = 0, numColumns = 0;
-      maze = new char[0][0];
-      while (sc.hasNextLine()){
-        String str = sc.nextLine();
-        char[] ch = str.toCharArray();
-        maze = append(maze, ch);
-      }
-
-      // for(char[] row : maze){
-      //   System.out.println(new String(row) );
-      // }
-      // String stringMaze = "";
-      // for(char[] row : maze){
-      //   stringMaze += new String(row) + "\n";
-      // }
-      //
-      // System.out.println(stringMaze + "BOO" );
-
+    File file = new File(filename);
+    Scanner sc = new Scanner(file);
+    String fullStr = "";
+    int numRows = 0, numColumns = 0;
+    maze = new char[0][0];
+    while (sc.hasNextLine()){
+      String str = sc.nextLine();
+      char[] ch = str.toCharArray();
+      maze = append(maze, ch);
     }
-    catch (Exception e) {
-      throw new FileNotFoundException("File not found");
-    }
-
   }
 
 
@@ -90,10 +73,7 @@ public class Maze{
     // return "WRITE THIS METHOD";
     String output = "";
     for(char[] row : maze){
-      for(char element : row){
-        output += element;
-      }
-      output += "\n";
+      output += new String(row) + "\n";
     }
     return output;
   }
@@ -126,7 +106,7 @@ public class Maze{
   All visited spots that were not part of the solution are changed to '.'
   All visited spots that are part of the solution are changed to '@'
   */
-  private int solve(int row, int col){ //you can add more parameters since this is private
+  private int solve(int row, int col, int moves){ //you can add more parameters since this is private
     //automatic animation! You are welcome.
     if(animate){
       gotoTop();
@@ -135,11 +115,22 @@ public class Maze{
     }
 
     //COMPLETE SOLVE
+    if(maze[row][col] == 'E') return moves;
+    if(!valid(row, col)) return -1;
+    maze[row][col] = '@';
+    solve(row + 1, col, moves + 1);
+    solve(row - 1, col, moves + 1);
+    solve(row, col + 1, moves + 1);
+    solve(row, col - 1, moves + 1);
     return -1; //so it compiles
   }
 
+  public boolean valid(int row, int column){
+    return ("#@.".indexOf(maze[row][column]) != -1);
+  }
   public static void main(String[] args) throws FileNotFoundException {
     Maze maze1 = new Maze("Maze1.txt");
     System.out.println(maze1.toString() );
+    maze1.solve(7, 1, 0);
   }
 }
