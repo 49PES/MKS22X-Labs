@@ -70,7 +70,6 @@ public class Maze{
   It should look like the text file with some characters replaced.
   */
   public String toString(){
-    // return "WRITE THIS METHOD";
     String output = "";
     for(char[] row : maze){
       output += new String(row) + "\n";
@@ -106,31 +105,61 @@ public class Maze{
   All visited spots that were not part of the solution are changed to '.'
   All visited spots that are part of the solution are changed to '@'
   */
-  private int solve(int row, int col, int moves){ //you can add more parameters since this is private
+  private int solve(int row, int col){ //you can add more parameters since this is private
     //automatic animation! You are welcome.
     if(animate){
       gotoTop();
-      System.out.println(this);
+      System.out.println(this.toString() );
       wait(50);
     }
 
     //COMPLETE SOLVE
-    if(maze[row][col] == 'E') return moves;
+    if(maze[row][col] == 'E') return 0;
     if(!valid(row, col)) return -1;
+
     maze[row][col] = '@';
-    solve(row + 1, col, moves + 1);
-    solve(row - 1, col, moves + 1);
-    solve(row, col + 1, moves + 1);
-    solve(row, col - 1, moves + 1);
+    if(animate){
+      gotoTop();
+      System.out.println(this.toString() );
+      wait(50);
+    }
+    int s = solve(row  + 1, col);
+    if(s > -1){
+      return s + 1;
+    }
+
+    int n = solve(row - 1, col);
+    if(n > -1){
+      return n + 1;
+    }
+
+    int w = solve(row, col - 1);
+    if(w > -1){
+      return w + 1;
+    }
+
+    int e = solve(row, col + 1);
+    if(e > -1){
+      return e + 1;
+    }
+
+
+    maze[row][col] = '.';
+    if(animate){
+      gotoTop();
+      System.out.println(this.toString() );
+      wait(50);
+    }
     return -1; //so it compiles
   }
 
   public boolean valid(int row, int column){
-    return ("#@.".indexOf(maze[row][column]) != -1);
+    return (maze[row][column] != '#' && maze[row][column] != '@' && maze[row][column] != '.');
   }
   public static void main(String[] args) throws FileNotFoundException {
     Maze maze1 = new Maze("Maze1.txt");
     System.out.println(maze1.toString() );
-    maze1.solve(7, 1, 0);
+    maze1.setAnimate(true);
+    maze1.solve(7, 1);
   }
 }
