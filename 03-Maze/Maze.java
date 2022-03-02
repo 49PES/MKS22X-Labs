@@ -8,13 +8,11 @@ public class Maze{
   /*Constructor loads a maze text file, and sets animate to false by default.
   When the file is not found then:
   throw a FileNotFoundException
-
   You may assume the file contains a rectangular ascii maze, made with the following 4 characters:
   '#' - Walls - locations that cannot be moved onto
   ' ' - Empty Space - locations that can be moved onto
   'E' - the location of the goal if any (0 or more per file)
   'S' - the location of the start(exactly 1 per file)
-
   You may also assume the maze has a border of '#' around the edges.
   So you don't have to check for out of bounds!
   Some text editors always include a newline at the end of a file, but that is not always present.
@@ -93,12 +91,9 @@ public class Maze{
 
   /*
   Recursive Solve function:
-
   A solved maze has a path marked with '@' from S to E.
-
   Returns the number of @ symbols from S to E when the maze is solved,
   Returns -1 when the maze has no solution.
-
   Postcondition:
   The 'S' is replaced with '@'
   The 'E' remain the same
@@ -153,6 +148,18 @@ public class Maze{
     return -1; //so it compiles
   }
 
+  public int solve(){
+    int x = 0, y = 0;
+    for(int i = 0; i < maze.length; i++){
+      for(int j = 0; j < maze[0].length; j++){
+        if(maze[i][j] == 'S'){
+          x =  i; y = j;
+        }
+      }
+    }
+    return this.solve(x, y);
+  }
+
   public boolean valid(int row, int column){
     return (maze[row][column] != '#' && maze[row][column] != '@' && maze[row][column] != '.');
   }
@@ -160,6 +167,8 @@ public class Maze{
     Maze maze1 = new Maze("Maze1.txt");
     System.out.println(maze1.toString() );
     maze1.setAnimate(true);
+    // maze1.solve(7, 1);
+    // System.out.println(maze1.toString());
     maze1.solve(7, 1);
   }
 }
