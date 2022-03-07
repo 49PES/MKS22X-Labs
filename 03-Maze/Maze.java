@@ -151,14 +151,17 @@ public class Maze{
     return -1; //so it compiles
   }
 
-  public int solve(){
-    int x = 0, y = 0;
+  public int solve() throws Exception {
+    int x = -1, y = -1;
     for(int i = 0; i < maze.length; i++){
       for(int j = 0; j < maze[0].length; j++){
         if(maze[i][j] == 'S'){
           x =  i; y = j;
         }
       }
+    }
+    if(x == -1){
+      throw new Exception("Start not found");
     }
     return this.solve(x, y);
   }
