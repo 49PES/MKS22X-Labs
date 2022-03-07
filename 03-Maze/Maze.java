@@ -68,13 +68,16 @@ public class Maze{
   It should look like the text file with some characters replaced.
   */
   public String toString(){
+    return toString(this.maze);
+  }
+
+  public static String toString(char[][] array){
     String output = "";
-    for(char[] row : maze){
+    for(char[] row : array){
       output += new String(row) + "\n";
     }
     return output;
   }
-
   /*Wrapper Solve Function returns the helper function
   Note the helper function has the same name, but different parameters.
   Since the constructor exits when the file is not found or is missing an E or S, we can assume it exists.
@@ -160,15 +163,49 @@ public class Maze{
     return this.solve(x, y);
   }
 
+  public static void generator(char[][] array){
+    for(int i = 0; i < array[0].length; i++){
+      array[0][i] = '#';
+      array[array.length - 1][i] = '#';
+    }
+    for(int j = 0; j < array.length; j++){
+      array[j][0] = '#';
+      array[j][array[0].length - 1] = '#';
+    }
+    for(int i = 1; i < array.length - 1; i++){
+      for(int j = 1; j < array[0].length - 1; j++){
+        array[i][j] = ' ';
+      }
+    }
+    System.out.println(toString(array));
+  }
+
+  public static void generator(char[][] array, int row, int col){
+    if(array[row][col] != '#'){
+      // Not a wall
+      return;
+    }
+
+  }
+
   public boolean valid(int row, int column){
     return (maze[row][column] != '#' && maze[row][column] != '@' && maze[row][column] != '.');
   }
   public static void main(String[] args) throws FileNotFoundException {
     Maze maze1 = new Maze("Maze1.txt");
-    System.out.println(maze1.toString() );
-    maze1.setAnimate(true);
-    // maze1.solve(7, 1);
-    // System.out.println(maze1.toString());
-    maze1.solve(7, 1);
+    // System.out.println(maze1.toString() );
+    // maze1.setAnimate(true);
+    // // maze1.solve(7, 1);
+    // // System.out.println(maze1.toString());
+    // System.out.println(maze1.solve(7, 1));
+    char[][] array = new char[5][15];
+    generator(array);
+
+    for(char[] row : array){
+      for(char element : row){
+        System.out.print(element);
+      }
+      System.out.println();
+    }
   }
 }
