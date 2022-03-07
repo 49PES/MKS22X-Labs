@@ -1,36 +1,17 @@
 public class MazeGenerator{
   public static void generate(char[][] maze, int startrow, int startcol){
     maze[startrow][startcol] = 'S';
-    generateR(maze, 0, 0);
+    generateR(maze, 1, 1);
   }
 
   public static void generateR(char[][] maze, int row, int col){
-    // // Recursive base case - when the maze has been fully carved
-    // if(row == maze.length - 2 && col == maze[0].length - 1) { System.out.println(toString(maze)); return;}
-    // if(row == 0) {
-    //   generateR(maze, row + 1, col); // If on the top edge, recurse down - top edge
-    // }
-    // if(col == 0) {
-    //   generateR(maze, row, col + 1); // Don't carve the left edge
-    // }
-    // if(col == maze[0].length - 1){
-    //   generateR(maze, row + 1, 0); // Loop around when at the end of the row
-    // }
-    //
-    // if(maze[row][col] == '#' &&  wallNeighborCounter(maze, row, col) > 2){
-    //   // if the given index is a wall and there is fewer than 2 neighbors, then the wall is safe to carve
-    //   maze[row][col] = ' ';
-    // }
-    // generateR(maze, row, col + 1);
-
     if(valid(maze, row, col) ){
-      maze[row][col] == ' ';
-      generateR(maze, row - 1, col);
-
-
+      maze[row][col] = ' ';
+      if(valid(maze, row - 1, col)) {System.out.println("North is valid!"); generateR(maze, row - 1, col);}
+      if(valid(maze, row, col - 1)) {System.out.println("West is valid!");  generateR(maze, row , col - 1);}
+      if(valid(maze, row + 1, col)) {System.out.println("South is valid!");  generateR(maze, row + 1, col);}
+      if(valid(maze, row, col + 1)) {System.out.println("East is valid!");  generateR(maze, row, col + 1);}
     }
-
-
 
   }
 
@@ -41,6 +22,7 @@ public class MazeGenerator{
     // - "if before carving there are fewer than 2 ways to step into the square" (more than 2 wall neighbors)
     return (array[row][col] == '#' && neighborCounter(array, row, col) == 4 && wallNeighborCounter(array, row, col) > 2);
   }
+
   public static int neighborCounter(char[][] array, int row, int col){
     int counter = 0;
 
@@ -71,22 +53,15 @@ public class MazeGenerator{
     return output;
   }
 
-  // public static int[][] positionsGenerator(char[][] array){
-  //   int[][] positions = new int[array.length * array[0].length][2];
-  //   int index = 0;
-  //   for(int i = 0; i < array.length; i++){
-  //     for(int j = 0; j < array[0].length; j++){
-  //       positions[index] = new int[] {i, j};
-  //       System.out.println(positions[index][0] + ", " + positions[index][1]);
-  //       index++;
-  //     }
-  //   }
-  //
-  //   return positions;
-  //
-  // }
+
   public static void main(String[] args){
-    // char[][] array = new char[4][4];
-    // positionsGenerator(array);
+    char[][] maze = new char[5][10];
+    for(int i = 0; i < maze.length; i++){
+      for(int j = 0; j < maze[0].length; j++){
+        maze[i][j] = '#';
+      }
+    }
+    generate(maze, 3, 1);
+    System.out.println(toString(maze) );
   }
 }
