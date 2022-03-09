@@ -18,32 +18,37 @@ public class Bronze{
         }
       }
 
-      int[][] board = new int[0][3];
-      while(sc.hasNextLine()){
-        int[] row = new int[3];
-        row[0] = sc.nextInt();
-        row[1] = sc.nextInt();
-        row[2] = sc.nextInt();
-        board = append(board, row);
-      }
-      for(int[] row : board){
-        for(int c : row){
-          System.out.print(c + " ");
+      int[][] board = new int[N][3];
+      for(int i = 0; i < N; i++){
+        for(int j = 0; j < 3; j++){
+          board[i][j] = sc.nextInt();
         }
-        System.out.println();
       }
+      // while(sc.hasNextLine()){
+      //   int[] row = new int[3];
+      //   row[0] = sc.nextInt();
+      //   row[1] = sc.nextInt();
+      //   row[2] = sc.nextInt();
+      //   board = append(board, row);
+      // }
+      // for(int[] row : board){
+      //   for(int c : row){
+      //     System.out.print(c + " ");
+      //   }
+      //   System.out.println();
+      // }
   }
 
-  public static int[][] append(int[][] board, int[] row){
-    int[][] updatedBoard = new int[board.length + 1][3];
-    for(int i = 0; i < board.length; i++){
-      for(int j = 0; j < board.length; j++){
-        updatedBoard[i][j] = board[i][j];
-      }
-    }
-
-    updatedBoard[updatedBoard.length - 1] = row;
-    return updatedBoard;
-  }
+  // public static int[][] append(int[][] board, int[] row){
+  //   int[][] updatedBoard = new int[board.length + 1][3];
+  //   for(int i = 0; i < board.length; i++){
+  //     for(int j = 0; j < board.length; j++){
+  //       updatedBoard[i][j] = board[i][j];
+  //     }
+  //   }
+  //
+  //   updatedBoard[updatedBoard.length - 1] = row;
+  //   return updatedBoard;
+  // }
 
 }
