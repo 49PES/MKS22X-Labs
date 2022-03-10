@@ -18,10 +18,10 @@ public class Bronze{
         }
       }
 
-      int[][] board = new int[N][3];
+      int[][] instructions = new int[N][3];
       for(int i = 0; i < N; i++){
         for(int j = 0; j < 3; j++){
-          board[i][j] = sc.nextInt();
+          instructions[i][j] = sc.nextInt();
         }
       }
       // while(sc.hasNextLine()){
@@ -39,6 +39,27 @@ public class Bronze{
       // }
   }
 
+  public static void megaStomp(int[][] map, int[][] instructions){
+    for(int[] instruction : instructions){
+      stomp(instruction[0], instruction[1], instruction[2], map);
+    }
+  }
+
+  public static void stomp(int r, int c, int stomp, int[][] map){
+    int max = 0;
+    for(int i = r; i < r + 2; i++){
+      for(int j = c; j < c + 2; j++){
+        if(map[i][j] > max){max = map[i][j]; }
+      }
+    }
+
+    int minMax = max - stomp;
+    for(int i = r; i < r + 2; i++){
+      for(int j = c; j < c + 2; j++){
+        if(map[i][j] > minMax){map[i][j] = minMax;}
+      }
+    }
+  }
   // public static int[][] append(int[][] board, int[] row){
   //   int[][] updatedBoard = new int[board.length + 1][3];
   //   for(int i = 0; i < board.length; i++){
