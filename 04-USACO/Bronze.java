@@ -3,8 +3,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Bronze{
-  public static void main(String[] args){
-      Scanner sc = new Scanner(System.in);
+  public static void main(String[] args) throws FileNotFoundException {
+      Scanner sc = new Scanner(new File("makelake.in"));
       int R = sc.nextInt();
       int C = sc.nextInt();
       int E = sc.nextInt();
@@ -14,7 +14,7 @@ public class Bronze{
       int[][] map = new int[R][C];
       for(int i = 0; i < R; i++){
         for(int j = 0; j < C; j++){
-          sc.nextInt();
+          map[i][j] =  sc.nextInt();
         }
       }
 
@@ -24,24 +24,27 @@ public class Bronze{
           instructions[i][j] = sc.nextInt();
         }
       }
-      // while(sc.hasNextLine()){
-      //   int[] row = new int[3];
-      //   row[0] = sc.nextInt();
-      //   row[1] = sc.nextInt();
-      //   row[2] = sc.nextInt();
-      //   board = append(board, row);
-      // }
-      // for(int[] row : board){
-      //   for(int c : row){
-      //     System.out.print(c + " ");
-      //   }
-      //   System.out.println();
-      // }
+      megaStomp(map, instructions);
+      System.out.println(toString(map) );
+
+
   }
 
+  public static String toString(int[][] map){
+    String output = "";
+    for(int[] row : map){
+      for(int c : row){
+        output += c + " ";
+      }
+      output += "\n";
+    }
+    return output;
+  }
   public static void megaStomp(int[][] map, int[][] instructions){
+    System.out.println(toString(map) );
     for(int[] instruction : instructions){
       stomp(instruction[0], instruction[1], instruction[2], map);
+      System.out.println(toString(map) );
     }
   }
 
@@ -54,22 +57,23 @@ public class Bronze{
     }
 
     int minMax = max - stomp;
+    System.out.println("The maximum value is at " + r + ", " + c + " and it is equal to " + max + ". " + max + " - " + stomp + " = " +  minMax);
     for(int i = r; i < r + 2; i++){
       for(int j = c; j < c + 2; j++){
-        if(map[i][j] > minMax){map[i][j] = minMax;}
+        if(map[i][j] > minMax){map[i][j] = minMax; System.out.println("Boo!");}
       }
     }
   }
-  // public static int[][] append(int[][] board, int[] row){
-  //   int[][] updatedBoard = new int[board.length + 1][3];
-  //   for(int i = 0; i < board.length; i++){
-  //     for(int j = 0; j < board.length; j++){
-  //       updatedBoard[i][j] = board[i][j];
-  //     }
-  //   }
-  //
-  //   updatedBoard[updatedBoard.length - 1] = row;
-  //   return updatedBoard;
-  // }
+  public static int[][] append(int[][] board, int[] row){
+    int[][] updatedBoard = new int[board.length + 1][3];
+    for(int i = 0; i < board.length; i++){
+      for(int j = 0; j < board.length; j++){
+        updatedBoard[i][j] = board[i][j];
+      }
+    }
+
+    updatedBoard[updatedBoard.length - 1] = row;
+    return updatedBoard;
+  }
 
 }
