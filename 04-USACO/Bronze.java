@@ -4,30 +4,40 @@ import java.util.Scanner;
 
 public class Bronze{
   public static void main(String[] args) throws FileNotFoundException {
-      Scanner sc = new Scanner(new File("makelake.in"));
-      int R = sc.nextInt();
-      int C = sc.nextInt();
-      int E = sc.nextInt();
-      int N = sc.nextInt();
+    System.out.println(solve("makelake.in") );
+  }
 
-      // Generate the board
-      int[][] map = new int[R][C];
-      for(int i = 0; i < R; i++){
-        for(int j = 0; j < C; j++){
-          map[i][j] =  sc.nextInt();
+  public static void stomp(int[][] map, int[][] instructions){
+    for(int[] instruction : instructions){
+      int row = instruction[0] - 1;
+      int col = instruction[1] - 1;
+      int stomp = instruction[2];
+      int max = 0;
+
+      for(int i = row; i < row + 3; i++){
+        for(int j = col; j < col + 3; j++){
+          if (map[i][j] > max) {max = map[i][j];}
         }
       }
 
-      int[][] instructions = new int[N][3];
-      for(int i = 0; i < N; i++){
-        for(int j = 0; j < 3; j++){
-          instructions[i][j] = sc.nextInt();
+      for(int i = row; i < row + 3; i++){
+        for(int j = col; j < col + 3; j++){
+          if(map[i][j] > max - stomp) map[i][j] = max - stomp;
         }
       }
-      megaStomp(map, instructions);
-      System.out.println(toString(map) );
+    }
+  }
 
+  public static int[][] append(int[][] board, int[] row){
+    int[][] updatedBoard = new int[board.length + 1][3];
+    for(int i = 0; i < board.length; i++){
+      for(int j = 0; j < board.length; j++){
+        updatedBoard[i][j] = board[i][j];
+      }
+    }
 
+    updatedBoard[updatedBoard.length - 1] = row;
+    return updatedBoard;
   }
 
   public static String toString(int[][] map){
@@ -40,40 +50,40 @@ public class Bronze{
     }
     return output;
   }
-  public static void megaStomp(int[][] map, int[][] instructions){
-    System.out.println(toString(map) );
-    for(int[] instruction : instructions){
-      stomp(instruction[0], instruction[1], instruction[2], map);
-      System.out.println(toString(map) );
-    }
-  }
 
-  public static void stomp(int r, int c, int stomp, int[][] map){
-    int max = 0;
-    for(int i = r; i < r + 2; i++){
-      for(int j = c; j < c + 2; j++){
-        if(map[i][j] > max){max = map[i][j]; }
+  public static long solve(String filename) throws FileNotFoundException{
+    Scanner sc = new Scanner(new File(filename));
+    int R = sc.nextInt();
+    int C = sc.nextInt();
+    int E = sc.nextInt();
+    int N = sc.nextInt();
+
+    // Generate the board
+    int[][] map = new int[R][C];
+    for(int i = 0; i < R; i++){
+      for(int j = 0; j < C; j++){
+        map[i][j] =  sc.nextInt();
       }
     }
 
-    int minMax = max - stomp;
-    System.out.println("The maximum value is at " + r + ", " + c + " and it is equal to " + max + ". " + max + " - " + stomp + " = " +  minMax);
-    for(int i = r; i < r + 2; i++){
-      for(int j = c; j < c + 2; j++){
-        if(map[i][j] > minMax){map[i][j] = minMax; System.out.println("Boo!");}
-      }
-    }
-  }
-  public static int[][] append(int[][] board, int[] row){
-    int[][] updatedBoard = new int[board.length + 1][3];
-    for(int i = 0; i < board.length; i++){
-      for(int j = 0; j < board.length; j++){
-        updatedBoard[i][j] = board[i][j];
+    int[][] instructions = new int[N][3];
+    for(int i = 0; i < N; i++){
+      for(int j = 0; j < 3; j++){
+        instructions[i][j] = sc.nextInt();
       }
     }
 
-    updatedBoard[updatedBoard.length - 1] = row;
-    return updatedBoard;
+
+    stomp(map, instructions);
+
+    int sum = 0;
+    for(int i = 0; i < R; i++){
+      for(int j = 0; j < C; j++){
+        map[i][j] = E - map[i][j];
+        if(map[i][j] > 0){sum += map[i][j];}
+      }
+    }
+    return (sum * 72 * 72);
   }
 
 }
