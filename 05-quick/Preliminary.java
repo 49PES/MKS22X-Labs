@@ -35,7 +35,7 @@ public class Preliminary{
 
       }
 
-      // temp[leftBound] = partition;
+      temp[leftBound] = partition;
       for(int i = start; i <= end; i++){
           data[i] = temp[i - start];
       }
@@ -54,3 +54,51 @@ public class Preliminary{
 		System.out.println( Arrays.toString(partition(bob, 0, 6)) );
 	}
 }
+
+/*
+import java.util.Arrays;
+
+public class Preliminary{
+  public static int[] partition (int[] data, int start, int end){
+      // int[] temp = new int[end - start + 1];
+      // int partition = data[(start + end) / 2];
+
+      swap(data, start, (start + end) / 2);
+      int pivot = data[start];
+
+      int leftBound = start + 1;
+      int rightBound = end;
+
+      boolean insertLeft = true;
+      while(leftBound != rightBound){
+        if(data[leftBound] < pivot){
+            leftBound++;
+        }
+        else if(data[leftBound] > pivot){
+          swap(data, leftBound, rightBound);
+          rightBound--;
+        }
+        else{
+          if(insertLeft){
+            leftBound++;
+          }
+          else{
+            swap(data, leftBound, rightBound);
+          }
+        }
+      }
+
+  }
+
+    public static void swap(int[] data, int index1, int index2){
+        int temp = data[index1];
+        data[index1] = data[index2];
+        data[index2] = temp;
+    }
+
+	public static void main(String[] args) {
+		int[] bob = new int[] {7, 4, 2, 3, 1, 8, 6};
+		System.out.println( Arrays.toString(partition(bob, 0, 6)) );
+	}
+}
+*/
