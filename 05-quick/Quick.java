@@ -55,8 +55,26 @@ public class Quick{
     return data[partitionIndex];
   }
 
+  public static int[] quicksort(int[] data){
+    int lo = 0, hi = data.length - 1;
+    quickSortHelper(data, lo, hi);
+    return data;
+  }
+
+  public static void quickSortHelper(int[] data, int lo, int hi){
+    System.out.println(Arrays.toString(data) + lo + " " + hi);
+    if(data.length <= 1) {return;}
+    int partition = partition(data, lo, hi);
+    quickSortHelper(data, lo, partition - 1);
+    quickSortHelper(data, partition + 1, hi);
+  }
+
   public static void main(String[] args){
-    int[] bob = new int[] {3, 4, 2, 3, 1, 8, 6};
-    System.out.println(quickselect(bob, 5));
+    // int[] bob = new int[] {3, 4, 2, 3, 1, 8, 6};
+    int[] bob = new int[] {2, 1, 3, 3, 8, 6, 4};
+    System.out.println( partition(bob, 0, 2) );
+    System.out.println(Arrays.toString(bob) );
+    // System.out.println(quickselect(bob, 5));
+    // System.out.println(Arrays.toString(quicksort(bob) ) );
   }
 }
