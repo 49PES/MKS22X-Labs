@@ -1,35 +1,36 @@
 import java.util.Arrays;
 public class Preliminary{
   public static int partition (int[] data, int start, int end){
-      // int[] temp = new int[end - start + 1];
-      // int partition = data[(start + end) / 2];
+
       swap(data, start, (start + end) / 2);
       int pivot = data[start];
       int leftBound = start + 1;
       int rightBound = end;
       boolean insertLeft = true;
+
       while(leftBound != rightBound){
 
         if(data[leftBound] < pivot){
             leftBound++;
         }
+
         else if(data[leftBound] > pivot){
           swap(data, leftBound, rightBound);
           rightBound--;
         }
+
         else{
           if(insertLeft){
             leftBound++;
           }
           else{
             swap(data, leftBound, rightBound);
+            rightBound--;
           }
           insertLeft = !insertLeft;
         }
       }
-      if(leftBound > 1 && data[leftBound - 1] < pivot){
-        swap(data, start, leftBound - 1);
-      }
+      swap(data, start, leftBound - 1);
       return leftBound;
   }
     public static void swap(int[] data, int index1, int index2){
