@@ -25,35 +25,35 @@ public class Merge{
               j++;
             }
           }
-          System.out.println(Arrays.toString(left) + " + " + Arrays.toString(right) + " => " + Arrays.toString(mergedArray) );
           return mergedArray;
         }
 
-        public static void mergesort(int [] data){
-          int[] temp  = mergesortH(data);
-          data = temp;
+        public static int[] mergesort(int [] data){
+          return mergesortH(data);
         }
 
         public static int[] mergesortH(int[] data){
-          int[] temp = data;
           if(data.length > 1){
             int leftLength = data.length / 2;
             int[] left = new int[leftLength];
             int[] right = new int[data.length - leftLength];
             int k = 0;
             for(int i = 0; i < left.length; i++){
-              left[i] = data[k]; k++;
+              left[i] = data[k];
+              k++;
             }
 
             for(int j = 0; j < right.length; j++){
-              right[j] = data[k]; k++;
+              right[j] = data[k];
+              k++;
             }
 
-            mergesortH(left);
-            mergesortH(right);
-            temp = merge(left, right);
+            left = mergesortH(left);
+            right = mergesortH(right);
+            return merge(left, right);
+
           }
-          return temp;
+          return data;
         }
         public static void main(String[] args){
           int[] data = new int[10];
@@ -61,7 +61,7 @@ public class Merge{
             data[i] = (int) (Math.random() * 1000);
           }
           System.out.println(Arrays.toString(data));
-          mergesort(data);
+          data = mergesort(data);
           System.out.println(Arrays.toString(data));
         }
 }
