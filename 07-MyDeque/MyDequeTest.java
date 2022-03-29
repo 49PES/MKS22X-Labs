@@ -1,32 +1,29 @@
-public class MyDeque<E>{
+public class MyDequeTest<E>{
       private E[] data;
       private int size;
       private int start, end;
 
-      public MyDeque(){
+      public MyDequeTest(){
         @SuppressWarnings("unchecked")
-        E[] d = (E[]) new Object[64];
-        this.data = d;
-        this.start = 32;
-        this.end = 33;
-        this.size = 0;
+        E[] d = (E[]) new Object[size];
+        data = d;
+        size = 0;
       }
 
-      public MyDeque(int initialCapacity){
+      public MyDequeTest(int initialCapacity){
         @SuppressWarnings("unchecked")
         E[] d = (E[]) new Object[initialCapacity];
-        this.data = d;
-        this.start = (initialCapacity + 1) / 2 ;
-        this.end = this.start + 1;
-        this.size = 0;
-
+        data = d;
+        this.start = initialCapacity / 2;
+        this.end = start + 1;
+        size = 0;
         }
 
       public int size(){
         return size;
       }
 
-      // Wrapping start and end around for the add / removers
+      // Fixing start and end for the add / removers
       public void readjust(){
         if(start < 0) {
           start = data.length - 1;
@@ -48,26 +45,26 @@ public class MyDeque<E>{
       public String toString(){
         String list = "[" + data[start + 1];
         int index = start + 2, endIndex = end;
+        list += data[index];
         while(true){
            if(index == data.length){
              index = 0;
            }
-
-           if(index == endIndex){
-             break;
-           }
-
-           list += ", " + data[index];
+           if(index == endIndex){break;}
+           list += data[index] + ", ";
            index++;
         }
         return list + "]";
       }
 
       public void addFirst(E element){
+        @SuppressWarnings("unchecked")
         data[start] = element;
         start--;
         size++;
-        readjust();
+        if(start < 0){
+          start = data.length - 1;
+        }
       }
 
       public void addLast(E element){
@@ -76,40 +73,9 @@ public class MyDeque<E>{
         size++;
         readjust();
       }
-
-      // public E removeFirst(){
-      //   start++;
-      //   readjust();
-      //   size--;
-      // }
-      // public E removeLast(){
-      //   end--;
-      //   readjust();
-      //   size--;
-      // }
-
-      public void resize(){
-        @SuppressWarnings("unchecked")
-        E[] d = (E[]) new Object[data.length * 2];
-        int newIndex = d.length / 4;
-        int index = start + 1;
-        while(true){
-          if(index == end){
-            break; // terminate
-          }
-
-          if(index == data.length){
-            index = 0; // Wrap around
-          }
-
-          d[newIndex] = data[index];
-          newIndex++;
-          index++;
-        }
-
-        this.data = d;
-      }
-
+      // public E removeFirst(){ size--;}
+      // public E removeLast(){ size--; }
+      //
       public E getFirst(){
         if(start + 1 == data.length)
           return data[0]; // Wrap around
@@ -124,13 +90,13 @@ public class MyDeque<E>{
       }
 
         public static void main(String[] args){
-            MyDeque<E> list = new MyDeque<E>(10);
+            MyDequeTest list = new MyDequeTest(10);
             System.out.println(list.start + " " + list.end);
             list.addFirst(new String("foo") );
-            list.addFirst(new String("boo") );
-            list.addFirst(new String("moo") );
-            list.addLast(new String("too") );
-            System.out.println(list.toString() );
+            // list.addFirst(new String("boo") );
+            // list.addFirst(new String("moo") );
+            // list.addLast(new String("too") );
+            // System.out.println(list.toString() );
             // System.out.println(list.getFirst() );
             // System.out.println(list.start + " " + list.end);
         }
