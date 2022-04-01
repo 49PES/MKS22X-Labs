@@ -21,26 +21,31 @@ public class Calculator{
           if(Deck.size() < 2){
             throw new IllegalArgumentException("Too few operations for operation " + tokens[i]);
           }
-
+          // System.out.println(Deck.size() );
           double operandTwo = Deck.removeLast();
           double operandOne = Deck.removeLast();
 
           switch(tokens[i]){
             case "+":
               Deck.addLast(operandOne + operandTwo);
+              break;
             case "-":
               Deck.addLast(operandOne - operandTwo);
+              break;
             case "/":
               Deck.addLast(operandOne / operandTwo);
+              break;
             case "*":
               Deck.addLast(operandOne * operandTwo);
+              break;
             case "%":
               Deck.addLast(operandOne % operandTwo);
+              break;
           }
         }
     }
     if(Deck.size() > 1){
-      throw new IllegalArgumentException("Too many operands");
+      throw new IllegalArgumentException("Too many operands //  " + Deck.size() + " operands");
     }
     return Deck.getFirst();
   }
