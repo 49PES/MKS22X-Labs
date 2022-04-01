@@ -21,7 +21,7 @@ public class Calculator{
           if(Deck.size() < 2){
             throw new IllegalArgumentException("Too few operations for operation " + tokens[i]);
           }
-          // System.out.println(Deck.size() );
+
           double operandTwo = Deck.removeLast();
           double operandOne = Deck.removeLast();
 
@@ -45,7 +45,7 @@ public class Calculator{
         }
     }
     if(Deck.size() > 1){
-      throw new IllegalArgumentException("Too many operands //  " + Deck.size() + " operands");
+      throw new IllegalArgumentException("Too many operands");
     }
     return Deck.getFirst();
   }
