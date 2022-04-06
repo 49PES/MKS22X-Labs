@@ -7,16 +7,14 @@ public class BurnTrees{
   private static final int ASH = 3;
   private static final int SPACE = 0;
 
+
   private Frontier frontier;
 
   /*Determine if the simulation is still burning
    *@return false if any fires are still burning, true otherwise
    */
   public boolean done(){
-    //YOU MUST IMPLEMENT THIS METHOD
-    //(BEFORE WRITING ANY CODE READ ALL OF THE CODE AND SEE HOW IT FITS TOGETHER)
-    //HINT: do not check the board for fire which is an n^2 operation
-    return false;//placeholder for compilation purposes
+    return (frontier.size() == 0);
   }
 
 
@@ -24,10 +22,28 @@ public class BurnTrees{
    *All existing fires spread new fires, and turn to ash
    *new fires should remain fire, and not spread.
    */
+
+   public static boolean isTree(int[][] map, int x, int y){
+     return ((0 < x && x < map.length) && (0 < y && y < map.length) && map[x][y] == TREE);
+   }
   public void tick(){
-    ticks++;//leave this here.
-    //YOU MUST IMPLEMENT THE REST OF THIS METHOD
-    //(BEFORE WRITING ANY CODE READ ALL OF THE CODE AND SEE HOW IT FITS TOGETHER)
+    int[][] directions = new int[][] {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+    Frontier newFrontier = new Frontier();
+    while(frontier.size() > 0){
+        int[] fire = frontier.remove();
+        for(int[] direction : directions){
+          int x = fire[0] + direction[0], y = fire[1] + direction[1];
+          if(isTree(map, x, y)){
+            map[x][y] = FIRE;
+            newFrontier.add(x, y);
+          }
+
+          map[fire[0]][fire[1]] = ASH;
+        }
+    }
+
+    frontier = newFrontier;
+    ticks++;
   }
 
   /***********************YOU MIGHT UPDATE THIS**************************/
