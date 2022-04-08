@@ -24,7 +24,7 @@ public class BurnTrees{
    */
 
    public static boolean isTree(int[][] map, int x, int y){
-     return ((0 < x && x < map.length) && (0 < y && y < map.length) && map[x][y] == TREE);
+     return ((0 <= x && x < map.length) && (0 <= y && y < map.length) && map[x][y] == TREE);
    }
   public void tick(){
     int[][] directions = new int[][] {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
@@ -83,23 +83,39 @@ public class BurnTrees{
 
 
     public static void main(String[]args){
-      int WIDTH = 20;
-      int HEIGHT = 20;
-      int DELAY = 200;
-      double DENSITY = .7;
-      if(args.length > 1){
-        WIDTH = Integer.parseInt(args[0]);
-        HEIGHT = Integer.parseInt(args[1]);
-        DENSITY = Double.parseDouble(args[2]);
-      }
-      if(args.length > 3){
-        DELAY = Integer.parseInt(args[3]);
-      }
-      BurnTrees b = new BurnTrees(WIDTH,HEIGHT,DENSITY);
+      // int WIDTH = 20;
+      // int HEIGHT = 20;
+      // int DELAY = 200;
+      // double DENSITY = .7;
+      // if(args.length > 1){
+      //   WIDTH = Integer.parseInt(args[0]);
+      //   HEIGHT = Integer.parseInt(args[1]);
+      //   DENSITY = Double.parseDouble(args[2]);
+      // }
+      // if(args.length > 3){
+      //   DELAY = Integer.parseInt(args[3]);
+      // }
+      // BurnTrees b = new BurnTrees(WIDTH,HEIGHT,DENSITY);
+      //
+      //
+      // int ans = b.animate(DELAY);//animate all screens
+      // System.out.println(ans);//print the final answer
 
 
-      int ans = b.animate(DELAY);//animate all screens
-      System.out.println(ans);//print the final answer
+      int densityIncrement = 5;
+      int boardDimension = 10;
+      int index = 0;
+      int[][] densityTime = new int[100 / densityIncrement + 1][2];
+      for(int i = 0; i <= 100; i += densityIncrement){
+        BurnTrees test = new BurnTrees(boardDimension, boardDimension, i);
+        densityTime[index][0] = i;
+        densityTime[index][1] = test.run();
+        index++;
+      }
+      for(int[] row : densityTime){
+        System.out.println(row[0] + "\t" + row[1]);
+      }
+
 
       //int ans = b.outputAll();//print all screens one after another
       //System.out.println(ans);//print the final answer
