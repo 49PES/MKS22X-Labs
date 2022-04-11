@@ -10,22 +10,14 @@ public class BurnTrees{
 
   private Frontier frontier;
 
-  /*Determine if the simulation is still burning
-   *@return false if any fires are still burning, true otherwise
-   */
   public boolean done(){
     return (frontier.size() == 0);
   }
 
-
-  /*This is the core of the simulation. All of the logic for advancing to the next round goes here.
-   *All existing fires spread new fires, and turn to ash
-   *new fires should remain fire, and not spread.
-   */
-
-   public static boolean isTree(int[][] map, int x, int y){
+  public static boolean isTree(int[][] map, int x, int y){
      return ((0 <= x && x < map.length) && (0 <= y && y < map.length) && map[x][y] == TREE);
    }
+
   public void tick(){
     int[][] directions = new int[][] {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
     Frontier newFrontier = new Frontier();
@@ -46,12 +38,7 @@ public class BurnTrees{
     ticks++;
   }
 
-  /***********************YOU MIGHT UPDATE THIS**************************/
 
-  /*Initialize the simulation.
-   *If you add more instance variables you can add more here,
-   *otherwise it is complete
-   */
   public BurnTrees(int width,int height, double density){
     map = new int[height][width];
     for(int r=0; r<map.length; r++ ){
@@ -62,16 +49,12 @@ public class BurnTrees{
        }
      }
      frontier = new Frontier();
-     start();//set the left column on fire.
+     start();
   }
 
 
-  /*
-   *Sets the trees in the left column of the forest on fire
-   */
+
   public void start(){
-    //If you add more instance variables you can add more here,
-    //otherwise it is complete.
     for(int i = 0; i < map.length; i++){
       if(map[i][0]==TREE){
         map[i][0]=FIRE;
@@ -83,42 +66,41 @@ public class BurnTrees{
 
 
     public static void main(String[]args){
-      // int WIDTH = 20;
-      // int HEIGHT = 20;
-      // int DELAY = 200;
-      // double DENSITY = .7;
-      // if(args.length > 1){
-      //   WIDTH = Integer.parseInt(args[0]);
-      //   HEIGHT = Integer.parseInt(args[1]);
-      //   DENSITY = Double.parseDouble(args[2]);
-      // }
-      // if(args.length > 3){
-      //   DELAY = Integer.parseInt(args[3]);
-      // }
-      // BurnTrees b = new BurnTrees(WIDTH,HEIGHT,DENSITY);
-      //
-      //
-      // int ans = b.animate(DELAY);//animate all screens
-      // System.out.println(ans);//print the final answer
+      int REPETITION = 100;
+      int DIMENSION = 100;
+      double DENSITY_INCREMENT = 0.05;
+      double LOWER_BOUND = 0.0;
+      double UPPER_BOUND = 1.0;
 
+      if(args.length > 4){
+        REPETITION = Integer.parseInt(args[0]);
+        DIMENSION = Integer.parseInt(args[1]);
+        DENSITY_INCREMENT = Double.parseDouble(args[2]);
+        LOWER_BOUND = Double.parseDouble(args[3]);
+        UPPER_BOUND = Double.parseDouble(args[4]);
+      }
 
-      int densityIncrement = 5;
-      int boardDimension = 10;
+      double[][] densityTime = new double[(int) ((UPPER_BOUND - LOWER_BOUND) / DENSITY_INCREMENT) + 1][2];
       int index = 0;
-      int[][] densityTime = new int[100 / densityIncrement + 1][2];
-      for(int i = 0; i <= 100; i += densityIncrement){
-        BurnTrees test = new BurnTrees(boardDimension, boardDimension, i);
+
+      for(double i = LOWER_BOUND; i <= UPPER_BOUND; i += DENSITY_INCREMENT){
+        double avg = 0;
+        for(int j = 0; j < REPETITION; j++){
+          BurnTrees test = new BurnTrees(DIMENSION, DIMENSION, i);
+          avg += test.run();
+        }
+        avg /= REPETITION;
+
         densityTime[index][0] = i;
-        densityTime[index][1] = test.run();
+        densityTime[index][1] = avg;
+
         index++;
       }
-      for(int[] row : densityTime){
-        System.out.println(row[0] + "\t" + row[1]);
+
+      for(double[] row : densityTime){
+        System.out.println("| " + row[0] + " |\t " + row[1] + " |");
       }
 
-
-      //int ans = b.outputAll();//print all screens one after another
-      //System.out.println(ans);//print the final answer
     }
 
 
