@@ -1,6 +1,8 @@
- ArrayList<Orb>orbList;
+ArrayList<Orb>orbList;
+Orb Omega;
     void setup() {
       size(1000, 700);
+      Omega = new Orb(500, 350, 0, 0, 20);
       orbList = new ArrayList<Orb>();
     }
     void mouseClicked() {
@@ -13,7 +15,8 @@
     void draw() {
       background(255);
       for (Orb o : orbList) {
-        o.move();
+        // o.move();
+        Omega.attract(o);
         o.display();
       }
       fill(0);
