@@ -25,7 +25,11 @@
         fill(c);
         ellipse(x, y, radius, radius);
       }
-
+      void attract(Orb other){
+        float d = dist(x, y, other.x, other.y);
+        other.xSpeed += (x - other.x) / (d * d) * 20;
+        other.ySpeed += (y - other.y) / (d * d) * 20;
+      }
       void move(){
         //PART 2
         //change the x based on the xSpeed
