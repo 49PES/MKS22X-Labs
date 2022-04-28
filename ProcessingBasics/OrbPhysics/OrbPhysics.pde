@@ -16,16 +16,23 @@ Orb Omega;
       //The x and y positions are the same as the mouse
       //the radius should be between in the range [20.0,70.0)
       //the xSpeed and ySpeed should be in the range [-3.0,3.0)
-      orbList.add(new Orb(mouseX, mouseY, 5, 0,  20)); // 3
+      orbList.add(new Orb(mouseX, mouseY, 3, 0,  20)); // 3
     }
     void draw() {
       if(backgroundMode) { // 6
         background(255);
       }
       for (Orb o : orbList) {
-        // o.move();
-        Omega.attract(o);
+        o.move();
+        // Omega.attract(o);
         o.display();
+      }
+      
+      if(MODE == GRAVITY){
+        for(Orb o : orbList){
+          o.move();
+          o.gravity();
+        }
       }
       fill(0);
       text(frameRate,20,20);
@@ -33,13 +40,16 @@ Orb Omega;
     }
 
     void keyPressed(){
-      if(key == BACKSPACE){
-        orbList = new ArrayList<Orb>(); // 4
+      switch(key){
+        case(BACKSPACE):
+          orbList = new ArrayList<Orb>(); // 4
+          break;
+        case('b'):
+          backgroundMode = !backgroundMode; // 5
+          break;
+        case(' '):
+          MODE = (MODE + 1) % 2;
+          break;
       }
-      if(key == 'b'){
-        backgroundMode = !backgroundMode; // 5
-      }
-      if(keyCode == SPACEBAR){
-        MODE = (MODE + 1) % 2;
-      }
+      
     }
