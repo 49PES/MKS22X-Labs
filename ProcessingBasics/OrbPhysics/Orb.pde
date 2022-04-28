@@ -1,5 +1,4 @@
-
-    public class Orb{
+ public class Orb{
       float x,y;
       float xSpeed,ySpeed;
       float radius;
@@ -52,6 +51,10 @@
         //Add a small adjustment for gravity. Gravity is a ySpeed acceleration...
         //You don't need a variable for this if every object experiences the same
         //gravitational constant (find the value that looks nice experimentally, 9.8 will not work well).
+        
+      }
+      
+      void gravity(){
         float gravity = 0.2;
         ySpeed += gravity;
       }
