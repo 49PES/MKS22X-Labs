@@ -15,12 +15,12 @@ ArrayList<Orb>orbList;
   void setup() {
     size(1000, 800);
     orbList = new ArrayList<Orb>();
-    omega = new Orb(500, 400, 0, 0 , 20, SPRING_CONSTANT, SPRING_LENGTH, SPRING_DAMPEN);
+    omega = new Orb(500, 400, 0, 0 , 20,  0, 0, 0);
     MODE = 0;
     GRAVITY_MODE = true;
   }
   void mouseClicked() {
-    orbList.add(new Orb(mouseX, mouseY, 5, 0, 20, 0, 0, 0));
+    orbList.add(new Orb(mouseX, mouseY, 5, 0, 20, SPRING_CONSTANT, SPRING_LENGTH, SPRING_DAMPEN));
   }
   void draw() {
     
