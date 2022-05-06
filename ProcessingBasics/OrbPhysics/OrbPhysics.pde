@@ -8,9 +8,9 @@ ArrayList<Orb>orbList;
   final int GRAVITY = 0;
   final int ORBIT = 1;
   final int SPRING = 2;
-  float SPRING_CONSTANT = 10;
-  float SPRING_LENGTH = 50;
-  float SPRING_DAMPEN = 0.1;
+  float SPRING_CONSTANT = 0.15;
+  float SPRING_LENGTH = 100;
+  float SPRING_DAMPEN = 0.995;
   
   void setup() {
     size(1000, 800);
