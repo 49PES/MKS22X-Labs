@@ -45,7 +45,6 @@ public class Orb{
     ySpeed += gravity;
   }
   
-  // MALFUNCTIONING?
   void attractSpring(Orb other){
      float d = dist(x, y, other.x, other.y);
      float x_dist = (other.x - x);
@@ -53,11 +52,11 @@ public class Orb{
      
      float force = SPRING_CONSTANT * (d - SPRING_LENGTH);
      
-     other.xSpeed += force * x_dist / d;
-     other.ySpeed += force * y_dist / d;
+     other.xSpeed += force * -x_dist / (d * d);
+     other.ySpeed += force * -y_dist / (d * d);
      
-     other.xSpeed *= SPRING_DAMPEN; // Dampening
      other.xSpeed *= SPRING_DAMPEN; 
+     other.ySpeed *= SPRING_DAMPEN; 
   }
   void attract(Orb other){
     float d = dist(x, y, other.x, other.y);
