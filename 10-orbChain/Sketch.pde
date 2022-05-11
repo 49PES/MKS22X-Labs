@@ -5,13 +5,22 @@
   static float SPRING_CONSTANT = 0.015;
   static int MODE = SPRING;
   static float GRAVITY = 0.35;
+  static int MOUSE_MODE = 0;
   OrbList orbs;
     void setup() {
     size(1000, 800);
     orbs = new OrbList();
   }
   void mouseClicked() {
-    orbs.add(mouseX, new OrbNode(mouseX,mouseY,0,0,30));
+    switch(MOUSE_MODE){
+      case 0:
+       orbs.add(new OrbNode(mouseX,mouseY,0,0,30));
+       break;
+      case 1:
+        orbs.add(mouseX, new OrbNode(mouseX,mouseY,0,0,30));
+        break;
+    }
+
   }
   void draw() {
     background(255);
