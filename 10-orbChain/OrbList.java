@@ -1,50 +1,79 @@
 
-public class OrbList {
-  OrbNode first, last;
-
-  //create a fixed orb
-  OrbList() {
-    first = new FixedOrbNode(0, height/5);
-    last = new FixedOrbNode(width, height/5);
-    //link them to eachother
-    first.next = last;
-    last.prev = first;
+public class OrbNode {
+  float x, y;
+  float dx, dy;
+  float radius;
+  color c;
+  OrbNode next, prev;
+  public OrbNode() {  }
+  public OrbNode(float x_, float y_) {
+    this(x_, y_, 0.0, 0.0, 50.0);
+  }
+  public OrbNode(float x_, float y_, float dx_, float dy_, float radius_) {
+    x = x_;
+    y = y_;
+    dx = dx_;
+    dy = dy_;
+    radius = radius_;
+    c = color(random(255), random(255), random(255), 200);
   }
 
-  /**
-  *complete this method
-  */
-  void add(OrbNode orb){
-    //insert orb at the end of the list before the last node.
-    last.prev.next = orb; // The link after the previous orb now points to this orb
-    orb.prev = last.prev; // Thing before now comes before the new orb
 
-    orb.next = last; // Connect the new orb to the end
-    last.prev = orb; // Connect the end to the new orb
-  }
-
-  /**
-  *complete this method
-  *process all nodes by running move.
-  */
-  void processAll() {
-    OrbNode current = first;
-    while(current != null){
-      current.move();
-      current = current.next;
-    }
-    //advance current to next until it is null, move() each of the nodes
-  }
-  /**
-  *complete this method
-  *Display all nodes by running their display().
-  */
   void display() {
-    OrbNode current = first;
-    while(current != null){
-      current.display();
-      current = current.next;
+    fill(c);
+    ellipse(x, y, radius*2, radius*2);
+    //If next or previous exist, draw lines to them! (aim for slightly off center)
+    /*you write this part*/
+    if(next != null){
+      line(x, y, next.x, next.y - 5); // Center of current to slightly below on next
     }
-    //advance current to next until it is null, display() each of the nodes
+
+    if(prev != null){
+      line(x, y, prev.x, prev.y + 5); // Center of current to slightly above on previous
+      // Trying to maintain close parallel lines
+    }
+
+  }
+
+  void springAttract(OrbNode other) {
+    float dist = dist(x, y, other.x, other.y) ;
+    float force = (dist - SPRING_LENGTH) * SPRING_CONSTANT;
+    float displacex = (x - other.x) ;
+    float displacey = (y - other.y) ;
+    other.dx += displacex * force / dist;
+    other.dy += displacey * force / dist;
+    other.dx*= SPRING_DAMPEN;
+    other.dy*= SPRING_DAMPEN;
+  }
+
+  /**
+  *complete this method
+  */
+  void move() {
+    //have prev and next apply spring force to this node;
+    /*you write this part*/
+    if(prev != null){
+        prev.springAttract(this);
+    }
+
+    if(next != null){
+      next.springAttract(this);
+    }
+    //apply velocity to position
+    x+=dx;
+    y+=dy;
+    //apply gravity
+    dy+= GRAVITY;
+  }
+}
+
+public class FixedOrbNode extends OrbNode{
+  void move() {
+  }
+  FixedOrbNode(float x_, float y_) {
+    x = x_;
+    y = y_;
+    radius = 30;
+    c = color(0);
   }
 }
