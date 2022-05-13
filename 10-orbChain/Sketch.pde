@@ -19,6 +19,8 @@
       case 1:
         orbs.add(mouseX, new OrbNode(mouseX,mouseY,0,0,30));
         break;
+      case 2:
+        orbs.delete(orbs.getNodeAt(mouseX, mouseY));
     }
 
   }
@@ -30,6 +32,19 @@
     text("SPRING_DAMPEN: " + SPRING_DAMPEN, 10, 30);
     text("SPRING_LENGTH: " + SPRING_LENGTH, 10, 45);
     text("GRAVITY: " + GRAVITY, 10, 60);
+    text("MODE: ", 10, 75);
+    switch(MOUSE_MODE){
+      case 0:
+        text("ADD LAST", 55, 75);
+        break;
+      case 1:
+        text("ADD", 55, 75);
+        break;
+      case 2:
+        text("DELETE", 55, 75);
+        break;
+    }
+    
   }
 
   void keyPressed(){
@@ -58,6 +73,8 @@
       case '8':
         GRAVITY -= 0.05;
         break;
+      case ' ':
+        MOUSE_MODE = (MOUSE_MODE + 1) % 3;
     }
 
   }
