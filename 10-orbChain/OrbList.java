@@ -60,6 +60,7 @@ public class OrbList {
     while(current != null){
       float distance = dist(x, y, current.x, current.y);
       if(distance <= current.radius) return current;
+      current = current.next;
     }
     return null;
   }

@@ -19,6 +19,8 @@
       case 1:
         orbs.add(mouseX, new OrbNode(mouseX,mouseY,0,0,30));
         break;
+      case 2:
+        orbs.delete(orbs.getNodeAt(mouseX, mouseY));
     }
 
   }
@@ -30,9 +32,22 @@
     text("SPRING_DAMPEN: " + SPRING_DAMPEN, 10, 30);
     text("SPRING_LENGTH: " + SPRING_LENGTH, 10, 45);
     text("GRAVITY: " + GRAVITY, 10, 60);
+    text("MODE: ", 10, 75);
+    switch(MOUSE_MODE){
+      case 0:
+        text("ADD LAST", 55, 75);
+        break;
+      case 1:
+        text("ADD", 55, 75);
+        break;
+      case 2:
+        text("DELETE", 55, 75);
+        break;
+    }
+    
   }
 
-  void keyPressed(){
+    void keyPressed(){
     switch(key){
       case '1':
         SPRING_CONSTANT += 0.005;
@@ -41,23 +56,32 @@
         SPRING_CONSTANT -= 0.005;
         break;
       case '3':
-        SPRING_DAMPEN += 0.005;
+        if(SPRING_DAMPEN + 0.005 <= 1.0){
+          SPRING_DAMPEN += 0.005;
+        }
         break;
       case '4':
-        SPRING_DAMPEN -= 0.005;
+        if(SPRING_DAMPEN - 0.005 >= 0.0){
+          SPRING_DAMPEN -= 0.005;
+        }
         break;
       case '5':
         SPRING_LENGTH += 5;
         break;
       case '6':
-        SPRING_LENGTH -= 5;
+        if(SPRING_LENGTH - 5 >= 0){
+           SPRING_LENGTH -= 5;
+        }
         break;
       case '7':
         GRAVITY += 0.05;
         break;
       case '8':
-        GRAVITY -= 0.05;
+        if(GRAVITY - 0.05 >= 0){
+          GRAVITY -= 0.05;
+        }
         break;
+      case ' ':
+        MOUSE_MODE = (MOUSE_MODE + 1) % 3;
     }
-
-  }
+   }
