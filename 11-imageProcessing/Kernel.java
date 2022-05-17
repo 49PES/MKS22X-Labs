@@ -1,10 +1,6 @@
-
 class Kernel {
   float[][]kernel;
 
-  /**Constructor takes the kernel that will be applied to the image
-  *This implementation only allows 3x3 kernels
-  */
   public Kernel(float[][]init) {
     kernel = init;
   }
@@ -17,33 +13,44 @@ class Kernel {
   color calcNewColor(PImage img, int x, int y) {
     //Hint: start by always returning black.
     //This will let you test your apply method right away!
-  if(x - 1 < 0 || x + 1 > width || y - 1 < 0 || y + 1 > height){
+  if(x - 1 < 0 || x + 1 > img.width || y - 1 < 0 || y + 1 > img.height){
     return color(0); // Out of bounds
   }
   float redSum = 0, greenSum = 0, blueSum = 0;
   for(int row = y - 1; row <= y + 1; row++){
     for(int col = x - 1; col <= x + 1; col++){
-      redSum += red(img.get(row, col)) * kernel[row + 1 - y][col + 1 - x];
-      greenSum += green(img.get(row, col)) * kernel[row + 1 - y][col + 1 - x];
-      blueSum += blue(img.get(row, col)) * kernel[row + 1 - y][col + 1 - x];
+      color c = img.get(row, col);
+      float coefficient = kernel[row + 1 - y][col + 1 - x];
+
+      redSum += coefficient * red(c);
+      greenSum += coefficient * green(c);
+      blueSum += coefficient * blue(c);
+
     }
    }
    redSum = corrector(redSum);
    blueSum = corrector(blueSum);
    greenSum = corrector(greenSum);
+
    return color(redSum, greenSum, blueSum);
   }
   /** HELPER **/
   float corrector(float val){
-    if(val < 0) 
+    if(val < 0)
       val = 0;
-    if(val > 255) 
+    if(val > 255)
       val = 255;
     return val;
   }
   /**You must write this method that applies the kernel to the source,
     *and saves the data to the destination.*/
   void apply(PImage source, PImage destination) {
+    for(int col = 0; col < source.width; col++){
+      for(int row = 0; row < source.height; row++){
+        color newColor = calcNewColor(source, row, col);
+        destination.set(row, col, newColor);
+      }
+    }
   }
 
 }
