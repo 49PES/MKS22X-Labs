@@ -55,22 +55,13 @@ public class Merge{
     }
     return data;
   }
-
-  public static boolean isSorted(int[] data){
-      for(int i = 0; i < data.length -1; i++){
-        if(data[i] > data[i + 1]) return false;
-      }
-      return true;
-  }
   public static void main(String[] args){
-    int[] data = new int[10000];
-    for(int i = 0; i < 10000; i++){
+    int[] data = new int[10];
+    for(int i = 0; i < 10; i++){
       data[i] = (int) (Math.random() * 1000);
     }
-    // System.out.println(Arrays.toString(data));
-    System.out.println(isSorted(data) );
+    System.out.println(Arrays.toString(data));
     data = mergesort(data);
-    System.out.println(isSorted(data) );
-    // System.out.println(Arrays.toString(data));
+    System.out.println(Arrays.toString(data));
   }
 }
